@@ -28,9 +28,25 @@ const server: FastifyInstance = Fastify({
   disableRequestLogging: true,
   trustProxy: true,
 });
-server.register(cors, {
-  origin: "*",
+// Origins allowed to call this API from a browser. Add new trusted hosts
+// (e.g. SSO entry points) to ALLOWED_ORIGINS as a comma-separated list, or
+// edit the defaults below.
+const allowedOrigins = (
+  process.env.ALLOWED_ORIGINS ||
+  "https://support.mybag.tap.ool.pt,https://mybag.tap.ool.pt"
+)
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
 
+server.register(cors, {
+  origin: (origin, cb) => {
+    // Allow requests with no Origin header (curl, server-to-server, same-origin)
+    if (!origin) return cb(null, true);
+    if (allowedOrigins.includes(origin)) return cb(null, true);
+    return cb(new Error("Not allowed by CORS"), false);
+  },
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "Accept"],
 });
