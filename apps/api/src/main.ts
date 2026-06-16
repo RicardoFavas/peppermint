@@ -31,11 +31,7 @@ const server: FastifyInstance = Fastify({
 // Origins allowed to call this API from a browser. Add new trusted hosts
 // (e.g. SSO entry points) to ALLOWED_ORIGINS as a comma-separated list, or
 // edit the defaults below.
-const allowedOrigins = (
-  process.env.ALLOWED_ORIGINS ||
-  "https://support.mybag.tap.ool.pt,https://mybag.tap.ool.pt"
-)
-  .split(",")
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(",")
   .map((o) => o.trim())
   .filter(Boolean);
 
