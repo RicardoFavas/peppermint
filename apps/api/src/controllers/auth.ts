@@ -1025,6 +1025,157 @@ export function authRoutes(fastify: FastifyInstance) {
     }
   );
 
+  // External login - exchange a third-party JWT for a Peppermint session.
+  // Receives `Authorization: Bearer <jwt>`, looks the user up against the
+  // mybag user service, creates/updates the local user, then redirects to
+  // the client with a freshly issued Peppermint session token.
+  const externalLoginHandler = async (
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) => {
+    try {
+      const headerAuth = request.headers.authorization;
+      const referer = request.headers.referer
+
+      const externalToken = headerAuth?.slice("Bearer ".length)?.trim();
+      
+      if (!externalToken) {
+        return reply.code(401).send({
+          success: false,
+          message: "Missing or invalid Authorization header",
+        });
+      }
+
+      // Decode (do not verify) the external JWT to extract the user id
+      // from the `sub` claim - mybag is the source of truth for verification
+      // when we fetch the profile below.
+      const decoded = jwt.decode(externalToken) as { sub?: string } | null;
+      const externalUserId = decoded?.sub;
+      if (!externalUserId) {
+        return reply.code(401).send({
+          success: false,
+          message: "External token missing sub claim",
+        });
+      }
+
+
+      const mybagBase = "https://mybag.tap.ool.pt/api";
+
+      let profile: any;
+      if (referer?.includes("mybag.tap.ool.pt")) {
+        try {
+          const res = await axios.get(
+            `${mybagBase}/auth/user/${encodeURIComponent(externalUserId)}`,
+            {
+              headers: { Authorization: `Bearer ${externalToken}` },
+            }
+          );
+          profile = res.data;
+        } catch (err: any) {
+          return reply.code(401).send({
+            success: false,
+            message: "Failed to fetch external user",
+            details: err?.response?.data || err?.message,
+          });
+        }
+      } else {
+        return reply.code(401).send({
+          success: false,
+          message: "Invalid referer",
+        });
+      }
+      
+      if (!profile?.email) {
+        return reply.code(400).send({
+          success: false,
+          message: "External user is missing an email",
+        });
+      }
+
+      const fullName = [profile.first_name, profile.last_name]
+        .filter(Boolean)
+        .join(" ")
+        .trim();
+      const displayName = profile.display_name || fullName || profile.username || profile.email;
+
+      // Upsert the user by email
+      const user = await prisma.user.upsert({
+        where: { email: profile.email },
+        update: {
+          name: displayName,
+          language: profile.locale || undefined,
+          external_user: false,
+        },
+        create: {
+          email: profile.email,
+          name: displayName,
+          password: await bcrypt.hash(generateRandomPassword(24), 10),
+          isAdmin: false,
+          language: profile.locale || "en",
+          external_user: false,
+          firstLogin: false,
+        },
+      });
+
+      // Issue a Peppermint session JWT
+      const secret = Buffer.from(process.env.SECRET!, "base64");
+      const sessionToken = jwt.sign(
+        {
+          data: {
+            id: user.id,
+            sessionId: crypto.randomBytes(32).toString("hex"),
+          },
+        },
+        secret,
+        { expiresIn: "8h", algorithm: "HS256" }
+      );
+
+      await prisma.session.create({
+        data: {
+          userId: user.id,
+          sessionToken,
+          expires: new Date(Date.now() + 8 * 60 * 60 * 1000),
+          userAgent: request.headers["user-agent"] || "",
+          ipAddress: request.ip,
+        },
+      });
+
+      await tracking("user_logged_in_external", {});
+
+      // If the caller wants JSON (e.g. an API client), honor it. Otherwise
+      // bounce them through the client callback page so the cookie gets set
+      // in the browser.
+      const accepts = (request.headers["accept"] || "").toString();
+      if (accepts.includes("application/json")) {
+        return reply.send({
+          success: true,
+          token: sessionToken,
+          user: {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            isAdmin: user.isAdmin,
+          },
+        });
+      }
+
+      const redirectTarget = `/auth/external/callback?token=${encodeURIComponent(
+        sessionToken
+      )}`;
+      return reply.redirect(redirectTarget);
+    } catch (error: any) {
+      console.error("External login error:", error);
+      return reply.code(500).send({
+        success: false,
+        message: "External login failed",
+        details: error?.message,
+      });
+    }
+  };
+
+  // External SSO entry point - GET for browser redirects, POST for API callers.
+  fastify.get("/api/v1/external/login", externalLoginHandler);
+
   // Add ability to revoke specific sessions
   fastify.delete(
     "/api/v1/auth/sessions/:sessionId",
