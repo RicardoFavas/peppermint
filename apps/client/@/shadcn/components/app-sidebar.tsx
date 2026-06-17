@@ -167,15 +167,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         {/* <TeamSwitcher teams={data.teams} /> */}
         <div className="flex items-center gap-2 ">
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
-            <img src="/favicon/favicon-32x32.png" className="size-4" />
-          </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold text-xl">Peppermint</span>
-            <span className="truncate text-xs">
-              version: {process.env.NEXT_PUBLIC_CLIENT_VERSION}
-            </span>
-          </div>
+            <img src="/ool_logo.png"  className="pr-10 pl-10 pt-2"/>
         </div>
       </SidebarHeader>
       <SidebarContent>

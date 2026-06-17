@@ -505,6 +505,39 @@
 
     --radius: 0.5rem;
   }
+
+  .ool-theme {
+    /* JOAQUIM */
+    --background: 120 20% 94%; /* Light Green - #e8f5e9 */
+    --foreground: 120 25% 20%; /* Dark Green - #1b5e20 */
+
+    --card: var(--background);
+    --card-foreground: var(--foreground);
+
+    --popover: var(--background);
+    --popover-foreground: var(--foreground);
+
+    --primary: 123 39% 49%; /* Green - #43a047 */
+    --primary-foreground: 0 0% 100%; /* White - #ffffff */
+
+    --secondary: 88 50% 53%; /* Lime - #cddc39 */
+    --secondary-foreground: var(--foreground);
+
+    --muted: 120 20% 90%; /* Lighter Green - #c8e6c9 */
+    --muted-foreground: var(--foreground);
+
+    --accent: 40 100% 50%; /* Orange - #ff9800 */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%; /* Red - #f44336 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 120 20% 85%; /* Light Green - #c8e6c9 */
+    --input: var(--border);
+    --ring: var(--primary);
+
+    --radius: 0.5rem;
+  }
 }
 
 @layer base {

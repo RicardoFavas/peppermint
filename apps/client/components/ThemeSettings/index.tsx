@@ -23,8 +23,8 @@ export default function ThemeSettings() {
   const { state } = useSidebar();
 
   useEffect(() => {
-    // Retrieve the saved theme from localStorage or default to 'light'
-    const savedTheme = localStorage.getItem("theme") || "light";
+    // Retrieve the saved theme from localStorage or default to 'forest'
+    const savedTheme = localStorage.getItem("theme") || "forest";
     setTheme(savedTheme);
     document.documentElement.className = savedTheme;
   }, []);
@@ -41,6 +41,7 @@ export default function ThemeSettings() {
     <div>
       <main className="relative">
         <div className="flex justify-center">
+          { user.isAdmin &&
           <Select onValueChange={toggleTheme} value={theme}>
             <SelectTrigger className={`${state === "expanded" ? "w-[280px]" : "hidden"}`}>
               {state === "expanded" ? (
@@ -60,6 +61,8 @@ export default function ThemeSettings() {
                 <SelectItem value="material-light">Material Light</SelectItem>
                 {/* <SelectItem value="material-dark">Material Dark</SelectItem> */}
                 <SelectItem value="github-light">GitHub Light</SelectItem>
+                <SelectItem value="ool-theme">Out of Limits</SelectItem>
+
                 {/* <SelectItem value="github-dark">GitHub Dark</SelectItem> */}
                 {/* <SelectItem value="high-contrast-dark">
                   High Contrast Dark
@@ -68,6 +71,7 @@ export default function ThemeSettings() {
               </SelectGroup>
             </SelectContent>
           </Select>
+          }
         </div>
       </main>
     </div>
