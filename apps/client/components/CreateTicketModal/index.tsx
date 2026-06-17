@@ -452,7 +452,7 @@ export default function CreateTicketModal({ keypress, setKeyPressDown }) {
                                       )}
                                     </Listbox.Option>
                                     {users !== undefined &&
-                                      users.map((user: any) => (
+                                      users.filter((user:any) => user.isAdmin).map((user: any) => (
                                         <Listbox.Option
                                           key={user.id}
                                           className={({ active }) =>
