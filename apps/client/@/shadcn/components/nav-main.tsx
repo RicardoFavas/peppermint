@@ -31,7 +31,7 @@ export function NavMain({
 }) {
   const router = useRouter();
   const sidebar = useSidebar();
-  const [hideKeyboardShortcuts, setHideKeyboardShortcuts] = useState(false);
+  const [hideKeyboardShortcuts, setHideKeyboardShortcuts] = useState(true);
 
   useEffect(() => {
     const loadFlags = () => {
@@ -41,7 +41,7 @@ export function NavMain({
         const hideShortcuts = flags.find(
           (f: any) => f.name === "Hide Keyboard Shortcuts"
         )?.enabled;
-        setHideKeyboardShortcuts(hideShortcuts || true);
+        setHideKeyboardShortcuts(hideShortcuts);
       }
     };
 
