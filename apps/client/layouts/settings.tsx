@@ -32,6 +32,7 @@ export default function Settings({ children }) {
                     <span className="truncate">{t("notifications")}</span>
                   </Link>
 
+                  { /* 
                   <Link
                     href="/settings/password"
                     className={classNames(
@@ -44,7 +45,7 @@ export default function Settings({ children }) {
                     <KeyRound className="flex-shrink-0  h-5 w-5 text-foreground" />
                     <span>{t("reset_password")}</span>
                   </Link>
-
+                  */}
                   <Link
                     href="/settings/flags"
                     className={classNames(

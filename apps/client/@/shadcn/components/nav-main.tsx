@@ -41,7 +41,7 @@ export function NavMain({
         const hideShortcuts = flags.find(
           (f: any) => f.name === "Hide Keyboard Shortcuts"
         )?.enabled;
-        setHideKeyboardShortcuts(hideShortcuts || false);
+        setHideKeyboardShortcuts(hideShortcuts || true);
       }
     };
 
