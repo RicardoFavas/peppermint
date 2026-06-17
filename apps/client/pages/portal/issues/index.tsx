@@ -146,7 +146,7 @@ export default function Tickets() {
                     />
                   </svg>
                   <span className="mt-2 block text-sm font-semibold text-gray-900">
-                    Create your first issue
+                    Create your first 
                   </span>
                 </button>
               </div>
