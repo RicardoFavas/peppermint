@@ -507,7 +507,6 @@
   }
 
   .ool-theme {
-    /* JOAQUIM */
     --background: 120 20% 94%; /* Light Green - #e8f5e9 */
     --foreground: 120 25% 20%; /* Dark Green - #1b5e20 */
 
@@ -526,7 +525,7 @@
     --muted: 120 20% 90%; /* Lighter Green - #c8e6c9 */
     --muted-foreground: var(--foreground);
 
-    --accent: 40 100% 50%; /* Orange - #ff9800 */
+    --accent: 100 60% 45%; /* Lime - #a7cd2d */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%; /* Red - #f44336 */
@@ -537,6 +536,8 @@
     --ring: var(--primary);
 
     --radius: 0.5rem;
+
+    font-size: 20px !important;
   }
 }
 

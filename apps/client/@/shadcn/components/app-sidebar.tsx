@@ -69,7 +69,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: location.pathname === "/" ? true : false,
         initial: "h",
       },
-      {
+      /*
+      { 
         title: "Documents",
         url: `/${locale}/documents`,
         icon: FileText,
@@ -77,6 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         initial: "d",
         internal: true,
       },
+      */
       {
         title: "Issues",
         url: `/${locale}/issues`,
@@ -96,15 +98,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
         ],
       },
-      {
+    ]
+  };
+
+  if (user.isAdmin === true) {
+    data.navMain.push({
         title: "Admin",
         url: "/admin",
         icon: Settings,
         isActive: true,
         initial: "a",
-      },
-    ],
-  };
+      })
+  }
 
   function handleKeyPress(event: any) {
     const pathname = location.pathname;
@@ -166,8 +171,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" {...props} >
       <SidebarHeader>
         {/* <TeamSwitcher teams={data.teams} /> */}
-        <div className="flex items-center gap-2 ">
-            <img src="/ool_logo.png"  className="pr-10 pl-10 pt-2"/>
+        <div className="flex items-center justify-evenly">
+          <img src="/tap_mybag/logo.svg"  className="h-14 pt-2"/>
         </div>
       </SidebarHeader>
       <SidebarContent>

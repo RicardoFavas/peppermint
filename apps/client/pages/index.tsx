@@ -117,15 +117,6 @@ export default function Home() {
   return (
     <div className="flex flex-col xl:flex-row p-8 justify-center w-full">
       <div className="w-full xl:w-[70%] max-w-5xl">
-        <div className="block sm:hidden mb-4">
-          {user.isAdmin && (
-            <Link href="https://github.com/Peppermint-Lab/peppermint/releases">
-              <span className="inline-flex items-center rounded-md bg-green-700/10 px-3 py-2 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-500/20">
-                Version {process.env.NEXT_PUBLIC_CLIENT_VERSION}
-              </span>
-            </Link>
-          )}
-        </div>
         {!loading && (
           <>
             <div>
@@ -134,7 +125,8 @@ export default function Home() {
                   <Link href={item.href}>
                     <div
                       key={item.name}
-                      className="px-4 py-5 bg-gray-900 shadow rounded-lg overflow-hidden sm:p-6"
+                      className="px-4 py-5 shadow rounded-lg overflow-hidden sm:p-6"
+                      style={{ backgroundColor: '#a7cd2d' }}
                     >
                       <dt className="text-sm font-medium text-white truncate">
                         {item.name}

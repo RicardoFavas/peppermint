@@ -233,14 +233,9 @@ export default function PortalLayout({ children }: any) {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-10 lg:flex lg:w-64 2xl:w-72 lg:flex-col border-r-[1px]">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto  bg-[#ffffff] dark:bg-[#393E46] pb-4">
-            <div className="flex align-middle flex-row h-14 items-center border-b-[1px] px-6">
-              {/* <img className="h-8 w-auto" src="/logo.svg" alt="Workflow" /> */}
-              <Link href="https://peppermint.sh">
-                <span className="text-3xl ml-2  hover:text-green-600 font-bold ">
-                  Peppermint
-                </span>
-              </Link>
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto pb-4">
+            <div className="flex align-middle justify-center flex-row items-center">
+              <img src="/tap_mybag/logo.svg" className="h-14 mt-2 pt-2"/>
             </div>
             <nav className="flex flex-1 flex-col px-6">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">

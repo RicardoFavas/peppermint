@@ -1,0 +1,96 @@
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Invalid literal value, expected false at "i18n.localeDetection"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: R:\Ool\peppermint\peppermint\apps\client\node_modules\next-pwa\register.js
+> [PWA] Service worker: R:\Ool\peppermint\peppermint\apps\client\public\sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+> [PWA] Build in develop mode, cache and precache are mostly disabled. This means offline support is disabled, but you can continue developing other functions in service worker.
+Browserslist: browsers data (caniuse-lite) is 20 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+  ▲ Next.js 13.5.7
+  - Local:        http://localhost:3000
+
+ ✓ Ready in 2.8s
+ ⚠ ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+Warning
+
+(1:1) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.
+
+Import trace for requested module:
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+./styles/globals.css
+
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+Warning
+
+(1:1) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.
+
+Import trace for requested module:
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+./styles/globals.css
+
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+Warning
+
+(1:1) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.
+
+Import trace for requested module:
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+./styles/globals.css
+
+GenerateSW has been called multiple times, perhaps due to running webpack in --watch mode. The precache manifest generated after the first call may be inaccurate! Please see https://github.com/GoogleChrome/workbox/issues/1790 for more information.
+ ○ Compiling /404 ...
+[36mnext-translate[0m - compiled page: [36m/404[0m - locale: [36men[0m - namespaces: [36mpeppermint[0m - used loader: [36mgetStaticProps[0m
+Warning: viewport meta tags should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-viewport-meta
+Warning: <title> should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-title
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+Warning
+
+(1:1) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.
+
+Import trace for requested module:
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+./styles/globals.css
+
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+Warning
+
+(1:1) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.
+
+Import trace for requested module:
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+./styles/globals.css
+
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+Warning
+
+(1:1) autoprefixer: Replace color-adjust to print-color-adjust. The color-adjust shorthand is currently deprecated.
+
+Import trace for requested module:
+./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[1]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[8].oneOf[13].use[2]!./styles/globals.css
+./styles/globals.css
+
+GenerateSW has been called multiple times, perhaps due to running webpack in --watch mode. The precache manifest generated after the first call may be inaccurate! Please see https://github.com/GoogleChrome/workbox/issues/1790 for more information.
+[36mnext-translate[0m - compiled page: [36m/404[0m - locale: [36men[0m - namespaces: [36mpeppermint[0m - used loader: [36mgetStaticProps[0m
+Warning: viewport meta tags should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-viewport-meta
+Warning: <title> should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-title
+[36mnext-translate[0m - compiled page: [36m/auth/login[0m - locale: [36men[0m - namespaces: [36mpeppermint[0m - used loader: [36mgetStaticProps[0m
+Warning: viewport meta tags should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-viewport-meta
+Warning: <title> should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-title
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[36mnext-translate[0m - compiled page: [36m/auth/login[0m - locale: [36men[0m - namespaces: [36mpeppermint[0m - used loader: [36mgetStaticProps[0m
+Warning: viewport meta tags should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-viewport-meta
+Warning: <title> should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-title
+[36mnext-translate[0m - compiled page: [36m/404[0m - locale: [36men[0m - namespaces: [36mpeppermint[0m - used loader: [36mgetStaticProps[0m
+Warning: viewport meta tags should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-viewport-meta
+Warning: <title> should not be used in _document.js's <Head>. https://nextjs.org/docs/messages/no-document-title
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|R:\Ool\peppermint\peppermint\apps\client\node_modules\next\dist\build\webpack\loaders\css-loader\src\index.js??ruleSet[1].rules[8].oneOf[13].use[1]!R:\Ool\peppermint\peppermint\apps\client\node_modules\next\dist\build\webpack\loaders\postcss-loader\src\index.js??ruleSet[1].rules[8].oneOf[13].use[2]!R:\Ool\peppermint\peppermint\apps\client\styles\globals.css': No serializer registered for Warning
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> Array { 3 items } -> webpack/lib/ModuleWarning -> Warning
+(node:95832) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
