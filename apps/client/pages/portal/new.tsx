@@ -6,6 +6,7 @@
 // Send Email to Engineers with ticket creation if email notifications are turned on
 
 import { Listbox, Transition } from "@headlessui/react";
+import { getCookie } from "cookies-next";
 import {
   CheckCircleIcon,
   CheckIcon,
@@ -55,6 +56,7 @@ export default function ClientTicketNew() {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        Authorization: `Bearer ${getCookie("session")}`,
       },
       body: JSON.stringify({
         name: user.name,
