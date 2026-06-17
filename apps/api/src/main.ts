@@ -69,6 +69,15 @@ server.addHook("preHandler", async function (request: any, reply: any) {
     ) {
       return true;
     }
+    // External SSO entry point - carries a third-party token (in header OR
+    // ?authorization= query param to avoid CORS preflight from browsers),
+    // not a Peppermint JWT, so it must bypass the standard JWT check.
+    if (
+      request.url.startsWith("/api/v1/external/login") &&
+      request.method === "GET"
+    ) {
+      return true;
+    }
     const bearer = request.headers.authorization!.split(" ")[1];
     checkToken(bearer);
   } catch (err) {

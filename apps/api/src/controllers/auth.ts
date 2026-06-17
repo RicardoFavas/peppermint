@@ -1034,11 +1034,8 @@ export function authRoutes(fastify: FastifyInstance) {
     reply: FastifyReply
   ) => {
     try {
-      const headerAuth = request.headers.authorization;
-      const referer = request.headers.referer
-
-      const externalToken = headerAuth?.slice("Bearer ".length)?.trim();
-      
+      const externalToken =  ((request.query as any)?.authorization as string | undefined)
+      const referer = request.headers.referer;
       if (!externalToken) {
         return reply.code(401).send({
           success: false,
@@ -1057,7 +1054,6 @@ export function authRoutes(fastify: FastifyInstance) {
           message: "External token missing sub claim",
         });
       }
-
 
       const mybagBase = "https://mybag.tap.ool.pt/api";
 
