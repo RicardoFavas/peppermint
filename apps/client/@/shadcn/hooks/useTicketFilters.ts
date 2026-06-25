@@ -1,7 +1,10 @@
 import { Ticket } from '@/shadcn/types/tickets';
 import { useEffect, useState } from 'react';
+import { useUser } from './../../../store/session';
 
 export function useTicketFilters(tickets: Ticket[] = []) {
+  const user = useUser();
+
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>(() => {
     const saved = localStorage.getItem("all_selectedPriorities");
     return saved ? JSON.parse(saved) : [];
@@ -54,6 +57,7 @@ export function useTicketFilters(tickets: Ticket[] = []) {
   };
 
   const filteredTickets = tickets.filter((ticket) => {
+    const canBeViewedByUser = user?.user?.isAdmin === true || ticket?.createdBy?.id === user.user.id;
     const priorityMatch =
       selectedPriorities.length === 0 ||
       selectedPriorities.includes(ticket.priority);
@@ -64,7 +68,7 @@ export function useTicketFilters(tickets: Ticket[] = []) {
       selectedAssignees.length === 0 ||
       selectedAssignees.includes(ticket.assignedTo?.name || "Unassigned");
 
-    return priorityMatch && statusMatch && assigneeMatch;
+    return canBeViewedByUser && priorityMatch && statusMatch && assigneeMatch;
   });
 
   return {

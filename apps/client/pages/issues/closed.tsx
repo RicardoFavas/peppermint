@@ -69,7 +69,7 @@ export default function Tickets() {
 
   const token = getCookie("session");
   const { data, status, error, refetch } = useQuery(
-    "allusertickets",
+    "alltickets",
     () => getUserTickets(token),
     {
       refetchInterval: 5000,
@@ -144,6 +144,8 @@ export default function Tickets() {
 
   const filteredTickets = data
     ? data.tickets.filter((ticket) => {
+        const canBeViewedByUser = user?.user?.isAdmin === true || ticket?.createdBy?.id === user.user.id;
+
         const priorityMatch =
           selectedPriorities.length === 0 ||
           selectedPriorities.includes(ticket.priority);
@@ -154,7 +156,7 @@ export default function Tickets() {
           selectedAssignees.length === 0 ||
           selectedAssignees.includes(ticket.assignedTo?.name || "Unassigned");
 
-        return priorityMatch && statusMatch && assigneeMatch;
+        return canBeViewedByUser && priorityMatch && statusMatch && assigneeMatch;
       })
     : [];
 

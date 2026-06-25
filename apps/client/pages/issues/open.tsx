@@ -34,7 +34,7 @@ import { useQuery } from "react-query";
 import { useUser } from "../../store/session";
 
 async function getUserTickets(token: any) {
-  const res = await fetch(`/api/v1/tickets/user/open`, {
+  const res = await fetch(`/api/v1/tickets/open`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -69,7 +69,7 @@ export default function Tickets() {
 
   const token = getCookie("session");
   const { data, status, error, refetch } = useQuery(
-    "allusertickets",
+    "alltickets",
     () => getUserTickets(token),
     {
       refetchInterval: 5000,
@@ -153,6 +153,8 @@ export default function Tickets() {
 
   const filteredTickets = data
     ? data.tickets.filter((ticket) => {
+        const canBeViewedByUser = user?.user?.isAdmin === true || ticket?.createdBy?.id === user.user.id;
+
         const priorityMatch =
           selectedPriorities.length === 0 ||
           selectedPriorities.includes(ticket.priority);
@@ -163,7 +165,7 @@ export default function Tickets() {
           selectedAssignees.length === 0 ||
           selectedAssignees.includes(ticket.assignedTo?.name || "Unassigned");
 
-        return priorityMatch && statusMatch && assigneeMatch;
+        return canBeViewedByUser && priorityMatch && statusMatch && assigneeMatch;
       })
     : [];
 
