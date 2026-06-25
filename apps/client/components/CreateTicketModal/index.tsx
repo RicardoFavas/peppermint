@@ -10,6 +10,7 @@ import { useUser } from "../../store/session";
 import { toast } from "@/shadcn/hooks/use-toast";
 import { useSidebar } from "@/shadcn/ui/sidebar";
 import dynamic from "next/dynamic";
+import { User } from "@/shadcn/types/tickets";
 
 const Editor = dynamic(() => import("../BlockEditor"), { ssr: false });
 
@@ -61,6 +62,12 @@ export default function CreateTicketModal({ keypress, setKeyPressDown }) {
       .then((res) => {
         if (res) {
           setOptions(res.clients);
+          if (window.location.hostname === "localhost") {
+            setCompany(res.clients.find((c: any) => c.id === "3163a972-8f57-4c9a-a032-2a36fdc81e31")); // OOL Seleciona o MyBag by default
+          } else
+          if (window.location.hostname === "support.mybag.tap.ool.pt") {
+            setCompany(res.clients.find((c: any) => c.id === "3163a972-8f57-4c9a-a032-2a36fdc81e31")); // OOL Seleciona o MyBag by default
+          }
         }
       });
   };
@@ -80,6 +87,7 @@ export default function CreateTicketModal({ keypress, setKeyPressDown }) {
             // TODO: THINK ABOUT AUTO ASSIGN PREFERENCES
             // setEngineer(user)
             setUsers(res.users);
+            setEngineer(res.users.find((u:User) => u.id === 'd5a11afa-0b3b-4efb-bd58-4aa49c9e1307')); // OOL Seleciona o Jorge by default
           }
         });
     } catch (error) {
@@ -165,9 +173,9 @@ export default function CreateTicketModal({ keypress, setKeyPressDown }) {
           (f: any) => f.name === "Hide Email in Create"
         )?.enabled;
 
-        setHideKeyboardShortcuts(hideShortcuts || false);
-        setHideName(hideName || false);
-        setHideEmail(hideEmail || false);
+        setHideKeyboardShortcuts(hideShortcuts || true);
+        setHideName(hideName || true);
+        setHideEmail(hideEmail || true);
       }
     };
 
@@ -260,7 +268,9 @@ export default function CreateTicketModal({ keypress, setKeyPressDown }) {
                   <div className="flex flex-row space-x-4 pb-2 mt-2">
                     {!user.external_user && (
                       <>
-                        <Listbox value={company} onChange={setCompany}>
+                        {user.isAdmin &&
+                        <div className="border-red-500 border-2 border-spacing-1.5">
+                          <Listbox value={company} onChange={setCompany}>
                           {({ open }) => (
                             <>
                               <div className="relative">
@@ -381,129 +391,134 @@ export default function CreateTicketModal({ keypress, setKeyPressDown }) {
                               </div>
                             </>
                           )}
-                        </Listbox>
+                          </Listbox>
+                        </div>
+                        }
+                        {user.isAdmin &&
+                        <div className="border-red-500 border-2 border-spacing-1.5">
+                          <Listbox value={engineer} onChange={setEngineer}>
+                            {({ open }) => (
+                              <>
+                                <div className="relative">
+                                  
+                                  <Listbox.Button className="relative w-full min-w-[172px] cursor-default rounded-md bg-white dark:bg-[#0A090C] dark:text-white py-1 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    <span className="block truncate">
+                                      {engineer === undefined
+                                        ? t("select_an_engineer")
+                                        : engineer.name}
+                                    </span>
+                                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                      <ChevronUpDownIcon
+                                        className="h-5 w-5 text-gray-400"
+                                        aria-hidden="true"
+                                      />
+                                    </span>
+                                  </Listbox.Button>
 
-                        <Listbox value={engineer} onChange={setEngineer}>
-                          {({ open }) => (
-                            <>
-                              <div className="relative">
-                                <Listbox.Button className="relative w-full min-w-[172px] cursor-default rounded-md bg-white dark:bg-[#0A090C] dark:text-white py-1 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                  <span className="block truncate">
-                                    {engineer === undefined
-                                      ? t("select_an_engineer")
-                                      : engineer.name}
-                                  </span>
-                                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                    <ChevronUpDownIcon
-                                      className="h-5 w-5 text-gray-400"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                </Listbox.Button>
-
-                                <Transition
-                                  show={open}
-                                  as={Fragment}
-                                  leave="transition ease-in duration-100"
-                                  leaveFrom="opacity-100"
-                                  leaveTo="opacity-0"
-                                >
-                                  <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-[#0A090C] dark:text-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                    <Listbox.Option
-                                      className={({ active }) =>
-                                        classNames(
-                                          active
-                                            ? "bg-indigo-600 text-white"
-                                            : "text-gray-900 dark:text-white",
-                                          "relative cursor-default select-none py-2 pl-3 pr-9"
-                                        )
-                                      }
-                                      value={undefined}
-                                    >
-                                      {({ selected, active }) => (
-                                        <>
-                                          <span
-                                            className={classNames(
-                                              selected
-                                                ? "font-semibold"
-                                                : "font-normal",
-                                              "block truncate"
-                                            )}
-                                          >
-                                            Unassigned
-                                          </span>
-
-                                          {selected ? (
+                                  <Transition
+                                    show={open}
+                                    as={Fragment}
+                                    leave="transition ease-in duration-100"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                  >
+                                    <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-[#0A090C] dark:text-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                      <Listbox.Option
+                                        className={({ active }) =>
+                                          classNames(
+                                            active
+                                              ? "bg-indigo-600 text-white"
+                                              : "text-gray-900 dark:text-white",
+                                            "relative cursor-default select-none py-2 pl-3 pr-9"
+                                          )
+                                        }
+                                        value={undefined}
+                                      >
+                                        {({ selected, active }) => (
+                                          <>
                                             <span
                                               className={classNames(
-                                                active
-                                                  ? "text-white"
-                                                  : "text-indigo-600",
-                                                "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                selected
+                                                  ? "font-semibold"
+                                                  : "font-normal",
+                                                "block truncate"
                                               )}
                                             >
-                                              <CheckIcon
-                                                className="h-5 w-5"
-                                                aria-hidden="true"
-                                              />
+                                              Unassigned
                                             </span>
-                                          ) : null}
-                                        </>
-                                      )}
-                                    </Listbox.Option>
-                                    {users !== undefined &&
-                                      users.filter((user:any) => user.isAdmin).map((user: any) => (
-                                        <Listbox.Option
-                                          key={user.id}
-                                          className={({ active }) =>
-                                            classNames(
-                                              active
-                                                ? "bg-indigo-600 text-white"
-                                                : "text-gray-900 dark:text-white",
-                                              "relative cursor-default select-none py-2 pl-3 pr-9"
-                                            )
-                                          }
-                                          value={user}
-                                        >
-                                          {({ selected, active }) => (
-                                            <>
+
+                                            {selected ? (
                                               <span
                                                 className={classNames(
-                                                  selected
-                                                    ? "font-semibold"
-                                                    : "font-normal",
-                                                  "block truncate"
+                                                  active
+                                                    ? "text-white"
+                                                    : "text-indigo-600",
+                                                  "absolute inset-y-0 right-0 flex items-center pr-4"
                                                 )}
                                               >
-                                                {user.name}
+                                                <CheckIcon
+                                                  className="h-5 w-5"
+                                                  aria-hidden="true"
+                                                />
                                               </span>
-
-                                              {selected ? (
+                                            ) : null}
+                                          </>
+                                        )}
+                                      </Listbox.Option>
+                                      {users !== undefined &&
+                                        users.map((user: any) => (
+                                          <Listbox.Option
+                                            key={user.id}
+                                            className={({ active }) =>
+                                              classNames(
+                                                active
+                                                  ? "bg-indigo-600 text-white"
+                                                  : "text-gray-900 dark:text-white",
+                                                "relative cursor-default select-none py-2 pl-3 pr-9"
+                                              )
+                                            }
+                                            value={user}
+                                          >
+                                            {({ selected, active }) => (
+                                              <>
                                                 <span
                                                   className={classNames(
-                                                    active
-                                                      ? "text-white"
-                                                      : "text-indigo-600",
-                                                    "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                    selected
+                                                      ? "font-semibold"
+                                                      : "font-normal",
+                                                    "block truncate"
                                                   )}
                                                 >
-                                                  <CheckIcon
-                                                    className="h-5 w-5"
-                                                    aria-hidden="true"
-                                                  />
+                                                  {user.name}
                                                 </span>
-                                              ) : null}
-                                            </>
-                                          )}
-                                        </Listbox.Option>
-                                      ))}
-                                  </Listbox.Options>
-                                </Transition>
-                              </div>
-                            </>
-                          )}
-                        </Listbox>
 
+                                                {selected ? (
+                                                  <span
+                                                    className={classNames(
+                                                      active
+                                                        ? "text-white"
+                                                        : "text-indigo-600",
+                                                      "absolute inset-y-0 right-0 flex items-center pr-4"
+                                                    )}
+                                                  >
+                                                    <CheckIcon
+                                                      className="h-5 w-5"
+                                                      aria-hidden="true"
+                                                    />
+                                                  </span>
+                                                ) : null}
+                                              </>
+                                            )}
+                                          </Listbox.Option>
+                                        ))}
+                                    </Listbox.Options>
+                                  </Transition>
+                                </div>
+                              </>
+                            )}
+                          </Listbox>
+                        </div>
+                        }
                         <Listbox value={selected} onChange={setSelected}>
                           {({ open }) => (
                             <>
@@ -590,8 +605,13 @@ export default function CreateTicketModal({ keypress, setKeyPressDown }) {
                           setOpen(false);
                           createTicket();
                         }}
+                        disabled={!title}
                         type="button"
-                        className="inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs bg-green-600 font-medium text-white hover:bg-green-700 focus:outline-none "
+                        className={`inline-flex justify-center rounded-md shadow-sm px-2.5 py-1.5 border border-transparent text-xs font-medium text-white focus:outline-none ${
+                          title
+                            ? "bg-green-600 hover:bg-green-700"
+                            : "bg-gray-400 cursor-not-allowed"
+                        }`}
                       >
                         Create Ticket
                       </button>

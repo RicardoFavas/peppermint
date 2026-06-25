@@ -134,8 +134,6 @@ export function IconCombo({
   const [selectedStatus, setSelectedStatus] = React.useState<any | null>(null);
   const defaultIcon = value.find((k) => k.value === defaultName);
 
-  console.log(disabled);
-
   return (
     <div className="flex items-center space-x-4">
       <Popover open={open} onOpenChange={setOpen}>
@@ -158,7 +156,7 @@ export function IconCombo({
                   </div>
                 )}
                 <span className="mt-[2.5px] capitalize">
-                  {selectedStatus.value}
+                  {selectedStatus.value?.replace(/_/g, " ")}
                 </span>
               </div>
             ) : defaultName ? (
