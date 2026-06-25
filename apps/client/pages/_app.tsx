@@ -52,6 +52,16 @@ function Auth({ children }: any) {
 function MyApp({ Component, pageProps: { session, ...pageProps } }: any) {
   const router = useRouter();
 
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window?.location?.hostname === "support.mybag.tap.ool.pt") {
+        document.title = "MyBag - Tickets";
+      } else {
+        document.title = "Tickets";
+      }
+    }
+  }, []);
+
   if (router.asPath.slice(0, 5) === "/auth") {
     return (
       <ThemeProvider attribute="class" defaultTheme="light">
